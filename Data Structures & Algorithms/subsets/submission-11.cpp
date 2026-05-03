@@ -1,0 +1,22 @@
+class Solution {
+public:
+    vector<vector<int>> res;
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<int> subset;
+        backtrack(nums, subset, 0);
+        return res;
+    }   
+
+private:
+    void backtrack(const vector<int>& nums, vector<int>& subset, int i) {
+        if (i >= nums.size()) {
+            res.push_back(subset);
+            return; 
+        }
+
+        subset.push_back(nums[i]);
+        backtrack(nums, subset, i + 1);
+        subset.pop_back();
+        backtrack(nums, subset, i + 1);
+    }
+};
