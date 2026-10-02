@@ -1,0 +1,41 @@
+class Solution:
+    def maxAreaOfIsland(self, grid: List[List[int]]) -> int:
+        if not grid:
+            return 0
+
+        rows = len(grid)
+        cols = len(grid[0])
+        visited = set()
+        maxArea = 0
+
+        def bfs(r, c):
+            q = collections.deque()
+            q.append((r, c))
+            visited.add((r, c))
+            area = 1
+
+            while q:
+                directions = [[1, 0], [-1, 0], [0, 1], [0, -1]]
+                r, c = q.popleft()
+
+                for dr, dc in directions:
+                    if (
+                        (r + dr) in range(rows) and
+                        (c + dc) in range(cols) and 
+                        (r + dr, c + dc) not in visited and
+                        grid[r + dr][c + dc] == 1):
+
+                        area += 1
+                        q.append((r + dr, c + dc))
+                        visited.add((r + dr, c + dc))
+
+            return area
+
+        for r in range(rows):
+            for c in range(cols):
+                if grid[r][c] == 1:
+                    area = bfs(r, c)
+                    maxArea = max(maxArea, area)
+
+        return maxArea
+
